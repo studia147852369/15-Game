@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1511981377 source:c:\users\edodomi\desktop\studia\15-game\15game\main.cpp
+	<iostream>
+	<vector>
+	<cmath>
+	<iomanip>
+
