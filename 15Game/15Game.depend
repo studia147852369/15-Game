@@ -1,15 +1,17 @@
 # depslib dependency file v1.0
-1512017078 source:c:\users\edodomi\desktop\studia\15-game\15game\main.cpp
+1512402957 source:c:\users\edodomi\desktop\studia\15-game\15game\main.cpp
 	<iostream>
 	<vector>
 	<cmath>
 	<iomanip>
+	<set>
+	"Functions.h"
 
-1512022383 source:c:\users\edodomi\desktop\studia\15-game\15game\functions.cpp
+1512397504 source:c:\users\edodomi\desktop\studia\15-game\15game\functions.cpp
 	"Functions.h"
 	<vector>
 
-1512022403 c:\users\edodomi\desktop\studia\15-game\15game\functions.h
+1512384003 c:\users\edodomi\desktop\studia\15-game\15game\functions.h
 	<vector>
 	<cmath>
 	<iomanip>
