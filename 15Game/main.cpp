@@ -47,7 +47,7 @@ int licz=0 ;
                 else
                     {
                         pathtable.push_back(z);
-                        print(puzzle);
+                      //  return puzzle1;
                         //cin >> licz;break;
                     }
             }
@@ -84,6 +84,7 @@ int main() {
     puzzle[2].push_back(7);
     puzzle[2].push_back(8);
     puzzle[2].push_back(6);
+
 
     /*puzzle[1].push_back(5);
     puzzle[1].push_back(9);

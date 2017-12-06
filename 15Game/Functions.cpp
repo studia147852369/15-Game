@@ -70,62 +70,55 @@ U64 toNumber(vector< vector<int> > const &puzzle) {
     int size = puzzle.size();
     int numOfEl = size * size - 1;
 
-    for(int i = 0; i < size; i++) {
-        for(int j=0; j < size; j++) {
-            //cout << lessThan(puzzle, i, j) << "*" << numOfEl <<"! + ";
+    for(int i = 0; i < size; i++)
+    {
+        for(int j=0; j < size; j++)
+        {
             number += (lessThan(puzzle, i, j))*fact(numOfEl--);
         }
-        cout << endl;
     }
-
     return number;
 }
+
 vector<char> canMove(vector< vector<int> > const &puzzle,const int &xSizePuzzle, const int &ySizePuzzle ) {
     vector<char> moves;
-
+    int puzzleSize = puzzle.size()*puzzle.size();
     for (int i=0; i<ySizePuzzle; i++)
-       {
+      {
 
         for (int z=0; z<xSizePuzzle; z++)
-    {
-        if (puzzle[i][z] == puzzle.size()*puzzle.size())
         {
-            if ( i>0 )
-            moves.push_back('G');
-            if ( z<xSizePuzzle && z>0 )
-            moves.push_back('L');
-          if( i<ySizePuzzle -1)
-                moves.push_back('D');
-
-
-          if ( z>=0 && z<xSizePuzzle-1)
-              moves.push_back('P');
+            if (puzzle[i][z] == puzzleSize)
+            {
+                if ( i>0 )
+                    moves.push_back('G');
+                if ( z<xSizePuzzle && z>0 )
+                    moves.push_back('L');
+                if( i<ySizePuzzle -1)
+                    moves.push_back('D');
+                if ( z>=0 && z<xSizePuzzle-1)
+                    moves.push_back('P');
+            }
         }
-    }
-       }
+      }
     return moves;
-    }
+}
 
 vector< vector<int> > doMoves(char move, vector< vector<int> > puzzle)
 {
-
-int temp=0;
+int temp;
 for (int i=0; i<puzzle.size(); i++)
 {
-    if (temp == -1) break;
-
     for (int z=0; z<puzzle[i].size(); z++)
     {
-         //   cout  << "i " << i << " z " << z<<  "move " << move << endl;
-
-        if (puzzle[i][z] == puzzle.size()*puzzle.size())
+       if (puzzle[i][z] == puzzle.size()*puzzle.size())
         {
           if( move == 'G')
-            {   temp = puzzle[i][z];
+            {
+                temp = puzzle[i][z];
                 puzzle[i][z] = puzzle[i-1][z];
                 puzzle[i-1][z] = temp;
-                temp=-1;
-                break;
+                return puzzle;
             }
 
           if ( move == 'L' )
@@ -134,23 +127,21 @@ for (int i=0; i<puzzle.size(); i++)
                 temp = puzzle[i][z];
                 puzzle[i][z] = puzzle[i][z-1];
                 puzzle[i][z-1] = temp;
-                temp=-1;
-                break;
+                return puzzle;
             }
 
           if ( move == 'P' )
             {   temp = puzzle[i][z];
                 puzzle[i][z] = puzzle[i][z+1];
                 puzzle[i][z+1] = temp;
-                temp=-1;
-                break;
+                return puzzle;
+
             }
         if ( move == 'D' )
             {   temp = puzzle[i][z];
                 puzzle[i][z] = puzzle[i+1][z];
                 puzzle[i+1][z] = temp;
-                temp=-1;
-                break;
+                return puzzle;
             }
         }
     }
@@ -160,12 +151,9 @@ for (int i=0; i<puzzle.size(); i++)
 }
 vector< vector<int> > doReverseMoves(char move, vector< vector<int> > puzzle)
 {
-int temp=0;
+int temp;
 for (int i=0; i<puzzle.size(); i++)
     {
-        if (temp == -1)
-            break;
-
         for (int z=0; z<puzzle[i].size(); z++)
         {
             if (puzzle[i][z] == puzzle.size()*puzzle.size())
@@ -176,32 +164,32 @@ for (int i=0; i<puzzle.size(); i++)
                     temp = puzzle[i][z];
                     puzzle[i][z] = puzzle[i+1][z];
                     puzzle[i+1][z] = temp;
-                    temp = -1;
-                    break;
+                    return puzzle;
+
                 }
             if ( move == 'D' )
                 {
                     temp = puzzle[i][z];
                     puzzle[i][z] = puzzle[i-1][z];
                     puzzle[i-1][z] = temp;
-                    temp = -1;
-                    break;
+                    return puzzle;
+
                 }
             if ( move == 'L' )
                 {
                     temp = puzzle[i][z];
                     puzzle[i][z] = puzzle[i][z+1];
                     puzzle[i][z+1] = temp;
-                    temp = -1;
-                    break;
+                    return puzzle;
+
                 }
             if ( move == 'P' )
                 {
                     temp = puzzle[i][z];
                     puzzle[i][z] = puzzle[i][z-1];
                     puzzle[i][z-1] = temp;
-                    temp = -1;
-                    break;
+                    return puzzle;
+
                 }
             }
         }
@@ -226,19 +214,15 @@ bool checkCOuldBeResolve(vector< vector<int> > const &puzzle){
     {
         for (int j = i + 1; j <tempTabele.size(); j++)
         {
-            // count pairs(i, j) such that i appears
-            // before j, but i > j.
             if (tempTabele[j] && tempTabele[i] && tempTabele[i] > tempTabele[j] && tempTabele[i] != tempTabele.size())
                 inv_count++;
         }
     }
-    cout <<"WYNIK :  "<< numberBlank<<   "count  "<<inv_count <<  endl;
-
 
     if (puzzle.size() & 1)
         return !(inv_count & 1);
 
-    else     // grid is even
+    else
     {
         if (numberBlank & 1)
             return !(inv_count & 1);
