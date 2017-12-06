@@ -109,7 +109,7 @@ vector<char> canMove(vector< vector<int> > const &puzzle,const int &xSizePuzzle,
 vector< vector<int> > doMoves(char move, vector< vector<int> > puzzle)
 {
 
-int temp;
+int temp=0;
 for (int i=0; i<puzzle.size(); i++)
 {
     if (temp == -1) break;
@@ -160,7 +160,7 @@ for (int i=0; i<puzzle.size(); i++)
 }
 vector< vector<int> > doReverseMoves(char move, vector< vector<int> > puzzle)
 {
-int temp;
+int temp=0;
 for (int i=0; i<puzzle.size(); i++)
     {
         if (temp == -1)
@@ -205,8 +205,9 @@ for (int i=0; i<puzzle.size(); i++)
                 }
             }
         }
-    return puzzle;
+
     }
+    return puzzle;
 }
 
 bool checkCOuldBeResolve(vector< vector<int> > const &puzzle){
