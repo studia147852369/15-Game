@@ -92,10 +92,10 @@ vector<char> canMove(vector< vector<int> > const &puzzle,const int &xSizePuzzle,
             {
                 if ( i>0 )
                     moves.push_back('G');
-                if ( z<xSizePuzzle && z>0 )
-                    moves.push_back('L');
                 if( i<ySizePuzzle -1)
                     moves.push_back('D');
+                if ( z<xSizePuzzle && z>0 )
+                    moves.push_back('L');
                 if ( z>=0 && z<xSizePuzzle-1)
                     moves.push_back('P');
             }
