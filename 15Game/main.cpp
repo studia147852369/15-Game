@@ -14,57 +14,38 @@ int parentValue;
     set<U64> uniqValues;
    vector<char> pathtable;
  vector< vector<int> > puzzle1;
-int licz=0 ;
+
   vector< vector<int> > dfs(vector< vector<int> > puzzle, const int &xSizeBoard, const int &ySizeBoard)
-    {   licz++;
-        cout << "++++++++++++++++++++++++++++++++++++++++++++ petla " << licz << endl;
-            for (auto  z:canMove(puzzle, xSizeBoard, ySizeBoard)){
-                puzzle = doMoves(z,puzzle);
-                U64 value = toNumber(puzzle);
-                cout << "RUCh W " << z << " petla nr " << licz <<  endl;
-              if ( value != 0 )
-                {                                print(puzzle);
-
-                        if(!uniqValues.count(value))
-                            {
-                                uniqValues.insert(value);
-                                pathtable.push_back(z);
-                                    puzzle1 = dfs(puzzle, xSizeBoard, ySizeBoard);
-                              if (toNumber(puzzle1) == 0){
-                                              cout << "wychodze z     z    petli nr " << licz<<endl;
-                                              licz --;
-                                  return puzzle1;
-                              }
-                              else  puzzle = doReverseMoves(z, puzzle);
-                                cout << "stan po wyjsciu z petli " << endl;
-                                print(puzzle);
-
-
-                            }
-                        else
-                            {
-                                puzzle = doReverseMoves(z, puzzle);
-                                cout << "ruch wstecz z";
-                            }
+    {
+        for (auto  z:canMove(puzzle, xSizeBoard, ySizeBoard))
+        {
+            puzzle = doMoves(z,puzzle);
+            U64 value = toNumber(puzzle);
+            if ( value != 0 )
+            {
+                if(!uniqValues.count(value))
+                {
+                    print(puzzle);
+                    uniqValues.insert(value);
+                    pathtable.push_back(z);
+                    puzzle1 = dfs(puzzle, xSizeBoard, ySizeBoard);
+                    if (toNumber(puzzle1) == 0)
+                        return puzzle1;
+                    else
+                        puzzle = doReverseMoves(z, puzzle);
                 }
-
                 else
-                    {
-                        pathtable.push_back(z);
-                        cout << "mam" <<endl;
-                      //  return puzzle1;
-                        //cin >> licz;break;
-                    }
+                    puzzle = doReverseMoves(z, puzzle);
             }
-
-             cout << "wychodze z petli nr " << licz<<endl; licz--;
-
-            return puzzle;
+            else
+                pathtable.push_back(z);
+        }
+     return puzzle;
     }
 
 
 int main() {
-    /*  const int xsizePuzzle  = 2;
+    /*const int xsizePuzzle  = 2;
     const int ySizePuzzle = 2;
     vector< vector<int> > puzzle;
     puzzle.resize(2);
@@ -75,7 +56,7 @@ int main() {
     puzzle[1].push_back(3);
 
     puzzle[1].push_back(2);
- // */
+  */
    const int xsizePuzzle  = 3;
     const int ySizePuzzle = 3;
     vector< vector<int> > puzzle;
@@ -116,16 +97,18 @@ int main() {
 if(checkCOuldBeResolve(puzzle))
 {
     //poczatek
-        print(puzzle) ;
+       print(puzzle) ;
        uniqValues.insert(toNumber(puzzle));
-       vector< vector<int> > koniec =  dfs(puzzle, xsizePuzzle, ySizePuzzle);
+       vector< vector<int> > wynikKoncowy =  dfs(puzzle, xsizePuzzle, ySizePuzzle);
 
     //koniec
-    cout << "\n KONIEC \n\n\"";
-cout << "Koncowa wersja \n";
-print(koniec);
-    }
-
+    cout << "\n KONIEC n\"";
+    cout << "Wynik \n";
+    print(wynikKoncowy);
+    for (auto x:pathtable)
+        cout << x << " " ;
+    cout << endl;
+}
 
  return 0;
 }
