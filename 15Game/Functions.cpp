@@ -1,5 +1,7 @@
 #include "Functions.h"
 #include <vector>
+#include<list>
+#include<algorithm>
 
 
 void print( vector< vector<int> >  const &puzzle){
@@ -230,3 +232,38 @@ bool checkCOuldBeResolve(vector< vector<int> > const &puzzle){
             return inv_count & 1;
     }
 }
+
+
+ vector<char> heuristicMove(vector< vector<int> > puzzle, const int &xSizeBoard, const int &ySizeBoard)
+ {
+
+     U64 number;
+     vector<char> move =canMove(puzzle, xSizeBoard, ySizeBoard);
+     vector<int> uniqId;
+     vector<char> result;
+//for
+
+int index = 0;
+     for (auto x:move)
+        uniqId.push_back(toNumber(doMoves(x,puzzle)));
+
+do{
+
+    for (int i=0; i<uniqId.size(); i++){
+        if(uniqId[i] < uniqId[index])
+            index = i;
+    }
+    result.push_back(move[index]);
+    uniqId.erase(uniqId.begin()+index);
+    move.erase(move.begin()+ index);
+    index = 0;
+   }
+while(uniqId.size()!= 0);
+
+
+
+    return result ;
+}
+
+
+
