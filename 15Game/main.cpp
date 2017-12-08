@@ -6,20 +6,8 @@
 #include "Functions.h"
 
 using namespace std;
-
-
-
- /*
-
-
-
-*/
-
-
-
-
 int main() {
-
+/*
     const int xsizePuzzle  = 3;
     const int ySizePuzzle =3;
     vector< vector<int> > puzzle;
@@ -38,32 +26,32 @@ int main() {
     puzzle[2].push_back(5);
     puzzle[2].push_back(8);
 
-  /*
+  */
     const int xsizePuzzle  = 4;
     const int ySizePuzzle = 4;
     vector< vector<int> > puzzle;
     puzzle.resize(4);
 
-    puzzle[0].push_back(16);
+    puzzle[0].push_back(1);
     puzzle[0].push_back(2);
     puzzle[0].push_back(3);
     puzzle[0].push_back(4);
 
-    puzzle[1].push_back(1);
     puzzle[1].push_back(5);
+    puzzle[1].push_back(6);
     puzzle[1].push_back(7);
     puzzle[1].push_back(8);
 
     puzzle[2].push_back(9);
-    puzzle[2].push_back(6);
+    puzzle[2].push_back(10);
     puzzle[2].push_back(11);
     puzzle[2].push_back(12);
 
     puzzle[3].push_back(13);
-    puzzle[3].push_back(10);
+    puzzle[3].push_back(16);
     puzzle[3].push_back(14);
     puzzle[3].push_back(15);
-*/
+
 
 
 //uzywamy "dfs(puzzle,xsizePuzzle, ySizePuzzle); " zwykły dfs
