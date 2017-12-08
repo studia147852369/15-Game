@@ -2,7 +2,22 @@
 #include <vector>
 #include<list>
 #include<algorithm>
+#include <fstream>
 
+
+    set<U64> uniqValues;
+    vector<char> pathtable;
+    vector< vector<int> > puzzle1;
+
+void savetoFile(string name){
+  ofstream myfile;
+  myfile.open (name);
+
+  for (auto x:pathtable)
+    myfile << x;
+
+  myfile.close();
+}
 
 void print( vector< vector<int> >  const &puzzle){
     cout << "___________________________\n" <<endl;
@@ -237,16 +252,13 @@ bool checkCOuldBeResolve(vector< vector<int> > const &puzzle){
  vector<char> heuristicMove(vector< vector<int> > puzzle, const int &xSizeBoard, const int &ySizeBoard)
  {
 
-     U64 number;
+
      vector<char> move =canMove(puzzle, xSizeBoard, ySizeBoard);
      vector<int> uniqId;
      vector<char> result;
-//for
-
-int index = 0;
+     int index = 0;
      for (auto x:move)
         uniqId.push_back(toNumber(doMoves(x,puzzle)));
-
 do{
 
     for (int i=0; i<uniqId.size(); i++){
@@ -258,12 +270,101 @@ do{
     move.erase(move.begin()+ index);
     index = 0;
    }
-while(uniqId.size()!= 0);
-
-
-
-    return result ;
+    while(uniqId.size()!= 0);
+return result ;
 }
 
+//*******************************************
 
+void dfsHeuristic1(vector< vector<int> > &puzzle, const int &xsizePuzzle,const int &ySizePuzzle ){
+if(checkCOuldBeResolve(puzzle))
+    {
+       print(puzzle) ;
+       uniqValues.insert(toNumber(puzzle));
+       puzzle =  Heuristic1(puzzle, xsizePuzzle, ySizePuzzle);
 
+        print(puzzle);
+        savetoFile("dfsHeuristic1");
+    }
+else
+    cout << "Brak rozwiazania" << endl;
+
+}
+//*******************************************
+
+vector< vector<int> > Heuristic1(vector< vector<int> > puzzle, const int &xSizeBoard, const int &ySizeBoard)
+    {
+        vector<char> move = heuristicMove(puzzle,xSizeBoard,ySizeBoard );
+        for (auto  z:move)
+        {
+            puzzle = doMoves(z,puzzle);
+            U64 value = toNumber(puzzle);
+            if ( value != 0 )
+            {
+                if(!uniqValues.count(value))
+                {
+                    //print(puzzle);
+                    uniqValues.insert(value);
+                    pathtable.push_back(z);
+                    puzzle1 = Heuristic1(puzzle, xSizeBoard, ySizeBoard);
+                    if (toNumber(puzzle1) == 0)
+                        return puzzle1;
+                    else
+                        puzzle = doReverseMoves(z, puzzle);
+                }
+                else
+                    puzzle = doReverseMoves(z, puzzle);
+            }
+            else
+                {
+                    pathtable.push_back(z);
+                    break;
+                }
+        }
+     return puzzle;
+    }
+//*******************************************
+
+ vector< vector<int> > dfsSimply(vector< vector<int> > puzzle, const int &xSizeBoard, const int &ySizeBoard)
+    {
+        for (auto  z:canMove(puzzle, xSizeBoard, ySizeBoard))
+        {
+            puzzle = doMoves(z,puzzle);
+            U64 value = toNumber(puzzle);
+            if ( value != 0 )
+            {
+                if(!uniqValues.count(value))
+                {
+                    //print(puzzle);
+                    uniqValues.insert(value);
+                    pathtable.push_back(z);
+                    puzzle1 = dfsSimply(puzzle, xSizeBoard, ySizeBoard);
+                    if (toNumber(puzzle1) == 0)
+                        return puzzle1;
+                    else
+                        puzzle = doReverseMoves(z, puzzle);
+                }
+                else
+                    puzzle = doReverseMoves(z, puzzle);
+            }
+            else{
+                pathtable.push_back(z);
+                break;}
+        }
+     return puzzle;
+    }
+//*******************************************
+void dfs(vector< vector<int> > &puzzle, const int &xsizePuzzle,const int &ySizePuzzle ){
+if(checkCOuldBeResolve(puzzle))
+    {
+       print(puzzle) ;
+       uniqValues.insert(toNumber(puzzle));
+       puzzle =  dfsSimply(puzzle, xsizePuzzle, ySizePuzzle);
+
+        print(puzzle);
+        savetoFile("dfs");
+    }
+else
+    cout << "Brak rozwiazania" << endl;
+}
+//*******************************************

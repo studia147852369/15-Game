@@ -20,7 +20,9 @@ U64 toNumber(vector< vector<int> > const &puzzle);
 vector<char> canMove(vector< vector<int> > const &puzzle,const int &xSizePuzzle, const int &ySizePuzzle );
 vector< vector<int> > doMoves(char move, vector< vector<int> > puzzle);
 bool checkCOuldBeResolve(vector< vector<int> >const &puzzle);
- vector<char> heuristicMove(vector< vector<int> > puzzle, const int &xSizeBoard, const int &ySizeBoard);
-
+vector<char> heuristicMove(vector< vector<int> > puzzle, const int &xSizeBoard, const int &ySizeBoard);
+vector< vector<int> > Heuristic1(vector< vector<int> > puzzle, const int &xSizeBoard, const int &ySizeBoard);
+void dfsHeuristic1(vector< vector<int> > &puzzle, const int &xsizePuzzle,const int &ySizePuzzle );
+void dfs(vector< vector<int> > &puzzle, const int &xsizePuzzle,const int &ySizePuzzle );
 
 #endif // FUNCTIONS_H_INCLUDED
