@@ -249,10 +249,8 @@ bool checkCOuldBeResolve(vector< vector<int> > const &puzzle){
 }
 
 
- vector<char> heuristicMove(vector< vector<int> > puzzle, const int &xSizeBoard, const int &ySizeBoard)
+ vector<char> heuristic1Move(vector< vector<int> > puzzle, const int &xSizeBoard, const int &ySizeBoard)
  {
-
-
      vector<char> move =canMove(puzzle, xSizeBoard, ySizeBoard);
      vector<int> uniqId;
      vector<char> result;
@@ -276,7 +274,7 @@ return result ;
 
 //*******************************************
 
-void dfsHeuristic1(vector< vector<int> > &puzzle, const int &xsizePuzzle,const int &ySizePuzzle ){
+vector<char> dfsHeuristic1(vector< vector<int> > &puzzle, const int &xsizePuzzle,const int &ySizePuzzle ){
 if(checkCOuldBeResolve(puzzle))
     {
        print(puzzle) ;
@@ -288,13 +286,13 @@ if(checkCOuldBeResolve(puzzle))
     }
 else
     cout << "Brak rozwiazania" << endl;
-
+return pathtable;
 }
 //*******************************************
 
 vector< vector<int> > Heuristic1(vector< vector<int> > puzzle, const int &xSizeBoard, const int &ySizeBoard)
     {
-        vector<char> move = heuristicMove(puzzle,xSizeBoard,ySizeBoard );
+        vector<char> move = heuristic1Move(puzzle,xSizeBoard,ySizeBoard );
         for (auto  z:move)
         {
             puzzle = doMoves(z,puzzle);
@@ -354,7 +352,7 @@ vector< vector<int> > Heuristic1(vector< vector<int> > puzzle, const int &xSizeB
      return puzzle;
     }
 //*******************************************
-void dfs(vector< vector<int> > &puzzle, const int &xsizePuzzle,const int &ySizePuzzle ){
+vector<char> dfs(vector< vector<int> > &puzzle, const int &xsizePuzzle,const int &ySizePuzzle ){
 if(checkCOuldBeResolve(puzzle))
     {
        print(puzzle) ;
@@ -366,5 +364,93 @@ if(checkCOuldBeResolve(puzzle))
     }
 else
     cout << "Brak rozwiazania" << endl;
+return pathtable;
+}
+
+//*******************************************
+
+vector<char> dfsHeuristic2(vector< vector<int> > &puzzle, const int &xsizePuzzle,const int &ySizePuzzle ){
+if(checkCOuldBeResolve(puzzle))
+    {
+       print(puzzle) ;
+       uniqValues.insert(toNumber(puzzle));
+       puzzle = Heuristic2(puzzle, xsizePuzzle, ySizePuzzle);
+
+        print(puzzle);
+        savetoFile("dfsHeuristic2");
+    }
+else
+    cout << "Brak rozwiazania" << endl;
+return pathtable;
 }
 //*******************************************
+
+vector< vector<int> > Heuristic2(vector< vector<int> > puzzle, const int &xSizeBoard, const int &ySizeBoard)
+    {
+        vector<char> move = heuristic2Move(puzzle,xSizeBoard,ySizeBoard );
+        for (auto  z:move)
+        {
+            puzzle = doMoves(z,puzzle);
+            U64 value = toNumber(puzzle);
+            if ( value != 0 )
+            {
+                if(!uniqValues.count(value))
+                {
+                    //print(puzzle);
+                    uniqValues.insert(value);
+                    pathtable.push_back(z);
+                    puzzle1 = Heuristic2(puzzle, xSizeBoard, ySizeBoard);
+                    if (toNumber(puzzle1) == 0)
+                        return puzzle1;
+                    else
+                        puzzle = doReverseMoves(z, puzzle);
+                }
+                else
+                    puzzle = doReverseMoves(z, puzzle);
+            }
+            else
+                {
+                    pathtable.push_back(z);
+                    break;
+                }
+        }
+     return puzzle;
+    }
+
+   //*******************************************
+    vector<char> heuristic2Move(vector< vector<int> > puzzle, const int &xSizeBoard, const int &ySizeBoard)
+ {
+     vector<char> move =canMove(puzzle, xSizeBoard, ySizeBoard);
+     vector<int> properlyFieldsCount;
+     vector<char> result;
+     vector< vector<int> > temp;
+     int Count;
+     int index = 0;
+
+     for (auto x:move){
+            Count = 0;
+        temp = doMoves(x,puzzle);
+        for(int i=0; i<temp.size(); i++){
+            for(int y=0; y<temp[i].size(); y++ ){
+                if (temp[i][y] == (i*temp.size() + y +1))
+                    Count++;
+            }
+        }
+        properlyFieldsCount.push_back(Count);
+        Count = 0;
+     }
+
+do{
+    for (int i=0; i<properlyFieldsCount.size(); i++){
+        if(properlyFieldsCount[i] > properlyFieldsCount[index])
+            index = i;
+        }
+    result.push_back(move[index]);
+    properlyFieldsCount.erase(properlyFieldsCount.begin()+index);
+    move.erase(move.begin()+ index);
+    index = 0;
+ }
+ while(properlyFieldsCount.size()!= 0);
+
+return result ;
+}

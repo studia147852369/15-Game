@@ -14,12 +14,12 @@ int main() {
     puzzle.resize(3);
 
 
-    puzzle[0].push_back(1);
     puzzle[0].push_back(2);
+    puzzle[0].push_back(9);
     puzzle[0].push_back(3);
 
+    puzzle[1].push_back(1);
     puzzle[1].push_back(4);
-    puzzle[1].push_back(9);
     puzzle[1].push_back(6);
 
      puzzle[2].push_back(7);
@@ -33,23 +33,23 @@ int main() {
     puzzle.resize(4);
 
     puzzle[0].push_back(1);
+    puzzle[0].push_back(16);
     puzzle[0].push_back(2);
     puzzle[0].push_back(3);
-    puzzle[0].push_back(4);
 
     puzzle[1].push_back(5);
     puzzle[1].push_back(6);
-    puzzle[1].push_back(7);
     puzzle[1].push_back(8);
+    puzzle[1].push_back(4);
 
     puzzle[2].push_back(9);
     puzzle[2].push_back(10);
-    puzzle[2].push_back(11);
+    puzzle[2].push_back(7);
     puzzle[2].push_back(12);
 
     puzzle[3].push_back(13);
-    puzzle[3].push_back(16);
     puzzle[3].push_back(14);
+    puzzle[3].push_back(11);
     puzzle[3].push_back(15);
 
 
@@ -59,14 +59,13 @@ int main() {
 //  "dfsHeuristic2(puzzle,xsizePuzzle, ySizePuzzle)" heurystykanr2
 
 // Jezeli bedziesz tu chail robic switcha to wyczyscic musisz vektory pathtable uniqid idt !!!!!!
-dfs(puzzle,xsizePuzzle, ySizePuzzle);
+//
+
+
+//dfs(puzzle,xsizePuzzle, ySizePuzzle);
 //dfsHeuristic1(puzzle,xsizePuzzle, ySizePuzzle);
+//dfsHeuristic2(puzzle,xsizePuzzle, ySizePuzzle);
 
-//cout << "MAIN " <<endl;
-//print(puzzle);
-
-
-//zadzwon do mnie to powiem ci Ci
-
- return 0;
+print(puzzle);
+//return 0;
 }
